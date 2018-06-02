@@ -5,9 +5,9 @@ import math
 def phi(a,b):
     return math.exp(-100*(abs(int(a[0])-int(b[0]))+abs(int(a[1])-int(b[1]))+abs(int(a[2])-int(b[2])))**4)
 
-def change_to_gray(img):
+def change_to_gray(img,theta):  #new record use 100 other use 200
     t_gray=0.299*img[:,:,2]+0.587*img[:,:,1]+0.114*img[:,:,0]
-    gray=np.where(t_gray<200,0,255)
+    gray=np.where(t_gray<theta,0,255)
     return gray
 
 def check_end(img):
@@ -148,29 +148,25 @@ def check_score(bmp):
         return 10000*odd[1]+odd[2]*1000+odd[3]*100+odd[4]*10+odd[5]
         
 
-
-#def check_score_new_record():
-    
-
-
-
-'''
 def check_result(img):
-       input: the img of the game now
+    '''input: the img of the game now
        output: the result of the game 
                return_value=-1 stand for the game is continuing
-               return_value>=0 stand for the game is end and the return_value is the score of the player.
+               return_value>=0 stand for the game is end and the return_value is the score of the player.'''
     if check_end(img)==False:
         return -1
-    if check_new_record(img): 
-        return check_score_new_record(img)
+    if check_new_record(img):
+        gray=change_to_gray(img,100) 
+        return check_score(gray)
     else:
-        return check_score(img)          
+        gray=change_to_gray(img,200)
+        return check_score(gray)          
     
-    '''
     
+'''    
 img=cv.imread("end_num17.png")
 print(check_end(img))
 print(check_new_record(img))
-gray=change_to_gray(img)
+gray=change_to_gray(img,200)
 print(check_score(gray))
+'''
