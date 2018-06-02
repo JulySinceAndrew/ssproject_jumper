@@ -70,6 +70,8 @@ def check_score_window(bmp):
         number=1
     elif choose_number(var[0],40472,var[1],28762):
         number=7
+    elif choose_number(var[0],29865,var[1],34285):
+        number=4
     else:
         number=-1
 
@@ -97,8 +99,8 @@ def check_score_window(bmp):
     return number
 
 def check_score(bmp):
-    window=bmp[300:450,:]
-    center=window[:,480:600]
+    window=bmp
+    center=window[:,460:600]
     cv.imwrite('./center.bmp',center)
     c=check_score_window(center)
     print('center',c)
@@ -156,10 +158,12 @@ def check_result(img):
     if check_end(img)==False:
         return -1
     if check_new_record(img):
-        gray=change_to_gray(img,100) 
+        gray=change_to_gray(img,100)
+        gray=gray[540:700,:] 
         return check_score(gray)
     else:
         gray=change_to_gray(img,200)
+        gray=gray[300:450,:]
         return check_score(gray)          
     
     
@@ -170,3 +174,6 @@ print(check_new_record(img))
 gray=change_to_gray(img,200)
 print(check_score(gray))
 '''
+img=cv.imread("result.png")
+
+print(check_result(img))
